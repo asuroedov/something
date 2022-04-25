@@ -1,9 +1,18 @@
 import express from "express";
+import bodyParser from "body-parser";
+import { syncErrorMiddleware } from "./middlewares/errorMiddleware";
+
+import authRouter from "./routes/authRouter";
+
+require("dotenv").config();
 
 const app = express();
-const port = 5000;
-app.get("/", (request, response) => {
-  response.send("Hello");
-});
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Running on port ${port}`));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(authRouter);
+
+app.listen(PORT, () => {
+  app.use(syncErrorMiddleware);
+});
