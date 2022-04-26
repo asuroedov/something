@@ -37,8 +37,8 @@ const FormFields = () => {
   }, [login, password, navigate]);
 
   const btnDisabled = useMemo(() => {
-    return !password.length || !login.length;
-  }, [password, login]);
+    return !password.length || !login.length || isLoading;
+  }, [password, login, isLoading]);
 
   return (
     <div>
