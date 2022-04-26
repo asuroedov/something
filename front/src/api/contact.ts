@@ -21,3 +21,11 @@ export async function getContacts() {
     axios.get(`${BASE_URL}${route}`, { headers: { token } }),
   );
 }
+
+export async function changeContact(contact: ContactInterface, prevNumber: string) {
+  const token = sessionStorage.getItem(config.JWT_TOKEN_KEY_FOR_STORAGE) || "";
+
+  return await errorHandler<{ message: string; contact: ContactInterface }>(() =>
+    axios.put(`${BASE_URL}${route}`, { contact, prevNumber }, { headers: { token } }),
+  );
+}

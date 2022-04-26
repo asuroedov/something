@@ -1,11 +1,11 @@
 import { makeAutoObservable } from "mobx";
 import { ContactInterface } from "../types/contacts";
-import { addContact, getContacts } from "../api/contact";
+import { addContact, changeContact, getContacts } from "../api/contact";
 
-type PHONE = string;
+type ID = number;
 
 class ContactsStore {
-  contacts: Map<PHONE, ContactInterface> = new Map();
+  contacts: Map<ID, ContactInterface> = new Map();
 
   constructor() {
     makeAutoObservable(this);
@@ -15,7 +15,7 @@ class ContactsStore {
     const [data, errorMessage] = await addContact(contact);
     if (errorMessage || !data) return { isSuccess: false, message: errorMessage };
 
-    this.contacts.set(contact.phone, contact);
+    this.contacts.set(contact.id, contact);
     return { isSuccess: true };
   }
 
@@ -23,7 +23,15 @@ class ContactsStore {
     const [data, errorMessage] = await getContacts();
     if (errorMessage || !data) return { isSuccess: false, message: errorMessage };
 
-    data.contacts.forEach((contact) => this.contacts.set(contact.phone, contact));
+    data.contacts.forEach((contact) => this.contacts.set(contact.id, contact));
+    return { isSuccess: true };
+  }
+
+  async changeContact(contact: ContactInterface, prevNumber: string) {
+    const [data, errorMessage] = await changeContact(contact, prevNumber);
+    if (errorMessage || !data) return { isSuccess: false, message: errorMessage };
+
+    this.contacts.set(contact.id, contact);
     return { isSuccess: true };
   }
 }

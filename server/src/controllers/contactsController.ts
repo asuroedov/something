@@ -42,3 +42,25 @@ export async function addContact(
     next(e);
   }
 }
+
+export async function changeContact(
+  request: Request<{}, {}, { contact: ContactInterface; prevNumber: string }, {}>,
+  response: Response,
+  next: NextFunction,
+) {
+  try {
+    const { token } = request.headers;
+    const { contact, prevNumber } = request.body;
+    const { login } = jwt.verify(token, process.env.JWT_KEY);
+
+    const user = userService.findUser(login);
+    if (!user) throw new RequestError(404, "ошибка авторизации");
+
+    const isSuccessful = contactsService.changeContact(user, contact, prevNumber);
+    if (!isSuccessful) throw new RequestError(400, "не удалось редактировать контакт");
+
+    response.json({ message: "successful", contact });
+  } catch (e) {
+    next(e);
+  }
+}

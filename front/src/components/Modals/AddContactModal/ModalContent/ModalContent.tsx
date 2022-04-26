@@ -3,21 +3,20 @@ import InputWithTitle from "../../../Inputs/InputWithTitle/InputWithTitle";
 import Button from "../../../Button/Button";
 import DotLoader from "../../../DotLoader/DotLoader";
 
-import contactsStore from "../../../../mobx/contactsStore";
-import notificationsStore from "../../../../mobx/notificationsStore";
-import { NotificationTypes } from "../../../../types/notifications";
-
 import styles from "./style.module.scss";
+import { ContactInterface } from "../../../../types/contacts";
 
 interface ModalContentProps {
-  closeModal?: () => void;
+  onSubmit: (contact: ContactInterface) => void;
+  actionButtonName: string;
+  isSaving: boolean;
+  contact?: ContactInterface;
 }
 
-const ModalContent: FC<ModalContentProps> = ({ closeModal }) => {
-  const [phone, setPhone] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [secondName, setSecondName] = useState("");
-  const [isSaving, setIsSaving] = useState(false);
+const ModalContent: FC<ModalContentProps> = ({ onSubmit, actionButtonName, isSaving, contact }) => {
+  const [phone, setPhone] = useState(contact?.phone || "");
+  const [firstName, setFirstName] = useState(contact?.firstName || "");
+  const [secondName, setSecondName] = useState(contact?.secondName || "");
 
   const handlePhoneChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setPhone(event.currentTarget.value);
@@ -30,20 +29,6 @@ const ModalContent: FC<ModalContentProps> = ({ closeModal }) => {
   const handleSecondNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setSecondName(event.currentTarget.value);
   }, []);
-
-  const handleSaveClick = useCallback(async () => {
-    setIsSaving(true);
-    const responseStatus = await contactsStore.addContact({ phone, firstName, secondName });
-    if (responseStatus.isSuccess) {
-      closeModal && closeModal();
-      notificationsStore.pushNotification("Контакт добавлен успешно!", NotificationTypes.success);
-      return;
-    }
-
-    if (!responseStatus.isSuccess)
-      notificationsStore.pushNotification(responseStatus.message || "Ошибка создания контакта");
-    setIsSaving(false);
-  }, [phone, firstName, secondName, closeModal]);
 
   return (
     <div className={styles.modalContent}>
@@ -62,8 +47,11 @@ const ModalContent: FC<ModalContentProps> = ({ closeModal }) => {
           className={styles.input}
         />
       </div>
-      <Button onClick={handleSaveClick} className={styles.createBtn}>
-        {isSaving ? <DotLoader className={styles.loader} /> : `Создать`}
+      <Button
+        onClick={() => onSubmit({ phone, firstName, secondName, id: contact?.id || 0 })}
+        className={styles.createBtn}
+      >
+        {isSaving ? <DotLoader className={styles.loader} /> : `${actionButtonName}`}
       </Button>
     </div>
   );
