@@ -1,0 +1,17 @@
+@import '../../../variables';
+
+.notificationCard {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: $red;
+  margin-bottom: 10px;
+  transition-duration: 0.5s;
+}
+
+.startHide {
+  opacity: 0;
+}
+
+.success {
+  background: greenyellow;
+}

@@ -19,4 +19,4 @@ const LoginForm: FC<LoginFormProps> = ({ className }) => {
   );
 };
 
-export default LoginForm;
+export default React.memo(LoginForm);

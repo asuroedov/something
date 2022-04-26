@@ -8,6 +8,7 @@ import Button from "../../Button/Button";
 import DotLoader from "../../DotLoader/DotLoader";
 
 import styles from "./style.module.scss";
+import notificationsStore from "../../../mobx/notificationsStore";
 
 const FormFields = () => {
   const [isLoading, setLoading] = useState(false);
@@ -24,8 +25,8 @@ const FormFields = () => {
 
   const handleClick = useCallback(async () => {
     setLoading(true);
-    const isSuccessLogin = await authStore.login(login, password);
-    // if(!isSuccessLogin) push notification
+    const loginResponseStatus = await authStore.login(login, password);
+    if (!loginResponseStatus.isSuccess) notificationsStore.pushNotification(loginResponseStatus.message || "");
     setLoading(false);
   }, [login, password]);
 

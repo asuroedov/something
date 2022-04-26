@@ -11,12 +11,12 @@ class AuthStore {
 
   async login(userLogin: string, password: string) {
     const [data, errorMessage] = await login(userLogin, password);
-    if (errorMessage || !data) return false;
+    if (errorMessage || !data) return { isSuccess: false, message: errorMessage };
 
     this.token = data.token;
     this.userLogin = data.login;
 
-    return true;
+    return { isSuccess: true };
   }
 }
 
