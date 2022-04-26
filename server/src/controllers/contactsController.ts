@@ -34,10 +34,10 @@ export async function addContact(
     const user = userService.findUser(login);
     if (!user) throw new RequestError(404, "ошибка авторизации");
 
-    const isSuccessful = contactsService.addContact(user, contact);
-    if (!isSuccessful) throw new RequestError(400, "контакт с таким номером уже существует");
+    const savedContact = contactsService.addContact(user, contact);
+    if (!savedContact) throw new RequestError(400, "контакт с таким номером уже существует");
 
-    response.json({ message: "successful", contact });
+    response.json({ message: "successful", contact: savedContact });
   } catch (e) {
     next(e);
   }

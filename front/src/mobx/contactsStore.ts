@@ -17,7 +17,7 @@ class ContactsStore {
     const [data, errorMessage] = await addContact(contact);
     if (errorMessage || !data) return { isSuccess: false, message: errorMessage };
 
-    this.contacts.set(contact.id, contact);
+    this.contacts.set(data.contact.id, data.contact);
     return { isSuccess: true };
   }
 

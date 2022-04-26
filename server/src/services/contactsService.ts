@@ -13,7 +13,7 @@ class ContactsService {
 
     const id = Math.random();
     user.contacts.set(contact.phone, { ...contact, id });
-    return true;
+    return { ...contact, id };
   }
 
   changeContact(user: UserInterface, contact: ContactInterface, prevNumber: string) {

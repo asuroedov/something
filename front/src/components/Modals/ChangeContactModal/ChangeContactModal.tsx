@@ -21,6 +21,7 @@ const ChangeContactModal: FC<ChangeContactModalProps> = ({ closeModal, contact }
       const responseStatus = await contactsStore.changeContact(newContactData, contact.phone);
       if (responseStatus.isSuccess) {
         notificationsStore.pushNotification("Контакт изменен успешно!", NotificationTypes.success);
+        closeModal();
       }
 
       if (!responseStatus.isSuccess)
