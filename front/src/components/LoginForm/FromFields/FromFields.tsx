@@ -1,4 +1,7 @@
 import React, { useCallback, useState } from "react";
+import { observer } from "mobx-react-lite";
+
+import authStore from "../../../mobx/authStore";
 
 import InputWithTitle from "../../Inputs/InputWithTitle/InputWithTitle";
 import Button from "../../Button/Button";
@@ -19,10 +22,12 @@ const FormFields = () => {
     setPassword(event.currentTarget.value);
   }, []);
 
-  const handleClick = useCallback(() => {
+  const handleClick = useCallback(async () => {
     setLoading(true);
-    setTimeout(() => setLoading(false), 2500);
-  }, []);
+    const isSuccessLogin = await authStore.login(login, password);
+    // if(!isSuccessLogin) push notification
+    setLoading(false);
+  }, [login, password]);
 
   return (
     <div>
@@ -41,4 +46,4 @@ const FormFields = () => {
   );
 };
 
-export default FormFields;
+export default observer(FormFields);
