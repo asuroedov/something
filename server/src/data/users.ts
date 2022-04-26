@@ -1,7 +1,14 @@
 import { UserInterface } from "../types/UserInterface";
 
 const users: Map<string, UserInterface> = new Map([
-  ["test1", { login: "test1", password: "121212", contacts: new Map() }],
+  [
+    "test1",
+    {
+      login: "test1",
+      password: "121212",
+      contacts: new Map([["123", { phone: "123", firstName: "firstName", secondName: "secondName" }]]),
+    },
+  ],
   ["test2", { login: "test2", password: "121212", contacts: new Map() }],
 ]);
 

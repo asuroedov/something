@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import contactsStore from "../../mobx/contactsStore";
 
 import styles from "./style.module.scss";
+import ContactCard from "../ContactCard/ContactCard";
 
 const ContactsList = () => {
   const { contacts } = contactsStore;
@@ -13,11 +14,9 @@ const ContactsList = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.contactsList}>
       {Array.from(contacts.values()).map((contact) => (
-        <div key={contact.phone}>
-          {contact.phone} {contact.firstName} {contact.secondName}
-        </div>
+        <ContactCard key={contact.phone} {...contact} />
       ))}
     </div>
   );

@@ -1,0 +1,15 @@
+@import "../../variables";
+.contactCard {
+  display: flex;
+  border-bottom: 1px solid $blue;
+  cursor: pointer;
+}
+
+.contactName {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $someFontDemi;
+  font-size: 18px;
+  margin-left: 15px;
+}
