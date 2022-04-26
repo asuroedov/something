@@ -1,23 +1,21 @@
-import React, { useCallback, useState } from "react";
-import Button from "../Button/Button";
+import React, { FC } from "react";
+import cn from "classnames";
+
+import FormFields from "./FromFields/FromFields";
+import FormTitle from "./FormTitle/FormTitle";
 
 import styles from "./style.module.scss";
-import DotLoader from "../DotLoader/DotLoader";
 
-const LoginForm = () => {
-  const [isLoading, setLoading] = useState(false);
+interface LoginFormProps {
+  className?: string;
+}
 
-  const handleClick = useCallback(() => {
-    setLoading(true);
-    setTimeout(() => setLoading(false), 2500);
-  }, []);
-
+const LoginForm: FC<LoginFormProps> = ({ className }) => {
   return (
-    <div>
-      <Button onClick={handleClick} className={styles.loginBtn}>
-        {isLoading ? <DotLoader className={styles.loader} /> : `Войти`}
-      </Button>
-    </div>
+    <form className={cn(styles.loginForm, className)} onSubmit={(event) => event.preventDefault()}>
+      <FormTitle title={"Вход в приложение"} className={styles.title} />
+      <FormFields />
+    </form>
   );
 };
 

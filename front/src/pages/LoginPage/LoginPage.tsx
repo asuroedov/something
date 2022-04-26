@@ -5,8 +5,8 @@ import styles from "./style.module.scss";
 
 const LoginPage = () => {
   return (
-    <div>
-      <LoginForm />
+    <div className={styles.loginPage}>
+      <LoginForm className={styles.loginForm} />
     </div>
   );
 };

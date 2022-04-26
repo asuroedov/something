@@ -1,0 +1,24 @@
+@import "../../../variables.scss";
+
+.loginBtn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $someFontDemi;
+}
+
+.input {
+  width: 100%;
+  margin-bottom: 6px;
+}
+
+.loader {
+  height: 20px;
+}
+
+@media (max-width: 600px) {
+  .loginForm {
+    width: 90%;
+  }
+}

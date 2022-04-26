@@ -1,13 +1,13 @@
 @import "../../variables.scss";
 
-.loginBtn {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: $someFontDemi;
+.loginForm {
+  width: 600px;
+  padding: 20px;
+  border: 1px solid $blue;
+  border-radius: 12px;
 }
 
-.loader {
-  height: 20px;
+.title {
+  text-align: center;
+  margin-bottom: 20px;
 }
