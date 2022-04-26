@@ -64,3 +64,22 @@ export async function changeContact(
     next(e);
   }
 }
+
+export async function deleteContact(request: Request<{}, {}, {}, {}>, response: Response, next: NextFunction) {
+  try {
+    const { token } = request.headers;
+    const { phoneNumber } = request.params as { phoneNumber: string };
+
+    const { login } = jwt.verify(token, process.env.JWT_KEY);
+
+    const user = userService.findUser(login);
+    if (!user) throw new RequestError(404, "ошибка авторизации");
+
+    const isSuccessful = contactsService.deleteContact(user, phoneNumber);
+    if (!isSuccessful) throw new RequestError(400, "не удалось удалить контакт");
+
+    response.json({ message: "successful" });
+  } catch (e) {
+    next(e);
+  }
+}

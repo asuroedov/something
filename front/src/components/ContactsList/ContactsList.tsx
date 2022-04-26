@@ -8,9 +8,10 @@ import ContactCard from "../ContactCard/ContactCard";
 import { sortContactsByAlphabet } from "../../utils/sortContactsByAlphabet";
 
 import styles from "./style.module.scss";
+import AcceptRemoveContactModal from "../Modals/AcceptRemoveContactModal/AcceptRemoveContactModal";
 
 const ContactsList = () => {
-  const { contacts } = contactsStore;
+  const { contacts, removeContactModalVisible, removingContact } = contactsStore;
 
   useEffect(() => {
     contactsStore.getContacts();
@@ -23,6 +24,9 @@ const ContactsList = () => {
         .map((contact) => (
           <ContactCard key={contact.id} contact={contact} />
         ))}
+      {removeContactModalVisible && (
+        <AcceptRemoveContactModal contact={removingContact} closeModal={() => contactsStore.hideRemoveContactModal()} />
+      )}
     </div>
   );
 };

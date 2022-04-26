@@ -1,0 +1,25 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  flex-grow: 1;
+}
+
+.info {
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+.buttons {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.buttons > button {
+  width: calc(50% - 10px);
+}
+
+.buttons > button:first-child {
+  margin-right: 20px;
+}

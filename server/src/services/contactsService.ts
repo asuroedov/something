@@ -25,6 +25,10 @@ class ContactsService {
     user.contacts.set(contact.phone, contact);
     return true;
   }
+
+  deleteContact(user: UserInterface, phoneNumber: string) {
+    return user.contacts.delete(phoneNumber);
+  }
 }
 
 export default new ContactsService();

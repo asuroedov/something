@@ -4,6 +4,8 @@ import Avatar from "../Avatar/Avatar";
 
 import styles from "./style.module.scss";
 import ChangeContactModal from "../Modals/ChangeContactModal/ChangeContactModal";
+import TrashIcon from "../../icons/TrashIcon/TrashIcon";
+import contactsStore from "../../mobx/contactsStore";
 
 interface ContactCardProps {
   contact: ContactInterface;
@@ -20,13 +22,24 @@ const ContactCard: FC<ContactCardProps> = ({ contact }) => {
     setChangeContactModalVisible(true);
   }, []);
 
+  const handleDeleteContactClick = useCallback(
+    (event: React.MouseEvent<SVGElement>) => {
+      contactsStore.showRemoveContactModal(contact);
+      event.stopPropagation();
+    },
+    [contact],
+  );
+
   return (
     <>
       <div className={styles.contactCard} onClick={handleContactCardClick}>
-        <Avatar />
-        <div className={styles.contactName}>
-          {contact.firstName} {contact.secondName}
+        <div className={styles.leftBlock}>
+          <Avatar />
+          <div className={styles.contactName}>
+            {contact.firstName} {contact.secondName}
+          </div>
         </div>
+        <TrashIcon className={styles.trashIcon} onClick={handleDeleteContactClick} />
       </div>
       {changeContactModalVisible && <ChangeContactModal closeModal={closeModal} contact={contact} />}
     </>

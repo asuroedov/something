@@ -1,11 +1,13 @@
 import { makeAutoObservable } from "mobx";
 import { ContactInterface } from "../types/contacts";
-import { addContact, changeContact, getContacts } from "../api/contact";
+import { addContact, changeContact, getContacts, removeContact } from "../api/contact";
 
 type ID = number;
 
 class ContactsStore {
   contacts: Map<ID, ContactInterface> = new Map();
+  removeContactModalVisible = false;
+  removingContact: ContactInterface | null = null;
 
   constructor() {
     makeAutoObservable(this);
@@ -33,6 +35,23 @@ class ContactsStore {
 
     this.contacts.set(contact.id, contact);
     return { isSuccess: true };
+  }
+
+  async removeContact(contact: ContactInterface) {
+    const [data, errorMessage] = await removeContact(contact.phone);
+    if (errorMessage || !data) return { isSuccess: false, message: errorMessage };
+
+    this.contacts.delete(contact.id);
+    return { isSuccess: true };
+  }
+
+  hideRemoveContactModal() {
+    this.removeContactModalVisible = false;
+    this.removingContact = null;
+  }
+  showRemoveContactModal(contact: ContactInterface) {
+    this.removingContact = contact;
+    this.removeContactModalVisible = true;
   }
 }
 
