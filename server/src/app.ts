@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { syncErrorMiddleware } from "./middlewares/errorMiddleware";
 
 import authRouter from "./routes/authRouter";
+import contactsRouter from "./routes/contactsRouter";
 
 require("dotenv").config();
 const cors = require("cors");
@@ -15,6 +16,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(authRouter);
+app.use(contactsRouter);
 
 app.listen(PORT, () => {
   app.use(syncErrorMiddleware);

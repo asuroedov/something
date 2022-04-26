@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { observer } from "mobx-react-lite";
+import { useNavigate } from "react-router-dom";
 
 import authStore from "../../../mobx/authStore";
 
@@ -15,6 +16,8 @@ const FormFields = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const handleChangeLogin = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setLogin(event.currentTarget.value);
   }, []);
@@ -25,10 +28,13 @@ const FormFields = () => {
 
   const handleClick = useCallback(async () => {
     setLoading(true);
+
     const loginResponseStatus = await authStore.login(login, password);
+    if (loginResponseStatus.isSuccess) navigate("/contacts");
     if (!loginResponseStatus.isSuccess) notificationsStore.pushNotification(loginResponseStatus.message || "");
+
     setLoading(false);
-  }, [login, password]);
+  }, [login, password, navigate]);
 
   return (
     <div>

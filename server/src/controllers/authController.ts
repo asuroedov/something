@@ -11,7 +11,7 @@ export async function login(
 
     const { token } = authService.login({ login, password });
 
-    response.json({ message: "successful", data: { token, login } });
+    response.json({ message: "successful", token, login });
   } catch (e) {
     next(e);
   }

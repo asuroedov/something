@@ -6,6 +6,6 @@ export async function errorHandler<DataType>(fn: Function): Promise<[DataType | 
     return [data, null];
   } catch (axiosError) {
     const { response } = axiosError as AxiosError<{ message: string }>;
-    return [null, response?.data?.message || "Не удалось получить ошибку"];
+    return [null, response?.data?.message || "Неопознаная ошибка"];
   }
 }

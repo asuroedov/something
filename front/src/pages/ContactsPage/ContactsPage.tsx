@@ -1,9 +1,14 @@
 import React from "react";
 
 import styles from "./style.module.scss";
+import ContactsList from "../../components/ContactsList/ContactsList";
 
 const ContactsPage = () => {
-  return <div>ContactsPage</div>;
+  return (
+    <>
+      <ContactsList />
+    </>
+  );
 };
 
 export default ContactsPage;

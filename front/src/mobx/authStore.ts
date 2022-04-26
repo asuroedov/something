@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { login } from "../api/auth";
+import { config } from "../utils/config";
 
 class AuthStore {
   token = "";
@@ -15,6 +16,7 @@ class AuthStore {
 
     this.token = data.token;
     this.userLogin = data.login;
+    sessionStorage.setItem(config.JWT_TOKEN_KEY_FOR_STORAGE, data.token);
 
     return { isSuccess: true };
   }
