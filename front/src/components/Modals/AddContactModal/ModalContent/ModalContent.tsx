@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback, useState } from "react";
+import React, { FC, memo, useCallback, useMemo, useState } from "react";
 import InputMask from "react-input-mask";
 
 import InputWithTitle from "../../../Inputs/InputWithTitle/InputWithTitle";
@@ -31,6 +31,10 @@ const ModalContent: FC<ModalContentProps> = ({ onSubmit, actionButtonName, isSav
   const handleSecondNameChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setSecondName(event.currentTarget.value);
   }, []);
+
+  const buttonDisabled = useMemo(() => {
+    return phone.split("").filter((char) => char !== "_" && char !== " ").length < 12;
+  }, [phone]);
 
   return (
     <div className={styles.modalContent}>
@@ -65,6 +69,7 @@ const ModalContent: FC<ModalContentProps> = ({ onSubmit, actionButtonName, isSav
       <Button
         onClick={() => onSubmit({ phone, firstName, secondName, id: contact?.id || 0 })}
         className={styles.createBtn}
+        disabled={buttonDisabled}
       >
         {isSaving ? <DotLoader className={styles.loader} /> : `${actionButtonName}`}
       </Button>

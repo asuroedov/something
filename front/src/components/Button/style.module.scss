@@ -16,3 +16,14 @@ $hoverBlue: #417496;
   background: $hoverBlue;
   border-color: $hoverBlue;
 }
+
+.btnDisabled {
+  background: #8e8e8e;
+  border-color: #8e8e8e;
+  cursor: not-allowed;
+}
+
+.btnDisabled:hover {
+  background: #8e8e8e;
+  border-color: #8e8e8e;
+}

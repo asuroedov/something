@@ -6,7 +6,9 @@ const users: Map<string, UserInterface> = new Map([
     {
       login: "test1",
       password: "121212",
-      contacts: new Map([["123", { id: 0.124856, phone: "123", firstName: "firstName", secondName: "secondName" }]]),
+      contacts: new Map([
+        ["123", { id: 0.124856, phone: "+79609999999", firstName: "firstName", secondName: "secondName" }],
+      ]),
     },
   ],
   ["test2", { login: "test2", password: "121212", contacts: new Map() }],
