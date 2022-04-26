@@ -6,6 +6,8 @@ type ID = number;
 
 class ContactsStore {
   contacts: Map<ID, ContactInterface> = new Map();
+  searchString = "";
+
   removeContactModalVisible = false;
   removingContact: ContactInterface | null = null;
 
@@ -52,6 +54,10 @@ class ContactsStore {
   showRemoveContactModal(contact: ContactInterface) {
     this.removingContact = contact;
     this.removeContactModalVisible = true;
+  }
+
+  setSearchString(search: string) {
+    this.searchString = search;
   }
 }
 
