@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router-dom";
 
@@ -36,6 +36,10 @@ const FormFields = () => {
     setLoading(false);
   }, [login, password, navigate]);
 
+  const btnDisabled = useMemo(() => {
+    return !password.length || !login.length;
+  }, [password, login]);
+
   return (
     <div>
       <InputWithTitle onChange={handleChangeLogin} placeholder={"Логин"} value={login} className={styles.input} />
@@ -46,7 +50,7 @@ const FormFields = () => {
         type={"password"}
         className={styles.input}
       />
-      <Button onClick={handleClick} className={styles.loginBtn}>
+      <Button onClick={handleClick} className={styles.loginBtn} disabled={btnDisabled}>
         {isLoading ? <DotLoader className={styles.loader} /> : `Войти`}
       </Button>
     </div>
