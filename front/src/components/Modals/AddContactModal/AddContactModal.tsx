@@ -6,6 +6,7 @@ import contactsStore from "../../../mobx/contactsStore";
 import notificationsStore from "../../../mobx/notificationsStore";
 import { NotificationTypes } from "../../../types/notifications";
 import { ContactInterface } from "../../../types/contacts";
+import { removeExtraPhoneSpaces } from "../../../utils/removeExtraPhoneSpaces";
 
 interface AddContactModalProps {
   closeModal: () => void;
@@ -16,7 +17,7 @@ const AddContactModal: FC<AddContactModalProps> = ({ closeModal }) => {
   const handleSaveClick = useCallback(
     async (contact: ContactInterface) => {
       setIsSaving(true);
-      const responseStatus = await contactsStore.addContact(contact);
+      const responseStatus = await contactsStore.addContact(removeExtraPhoneSpaces(contact));
       if (responseStatus.isSuccess) {
         closeModal && closeModal();
         notificationsStore.pushNotification("Контакт добавлен успешно!", NotificationTypes.success);

@@ -1,4 +1,6 @@
 import React, { FC, memo, useCallback, useState } from "react";
+import InputMask from "react-input-mask";
+
 import InputWithTitle from "../../../Inputs/InputWithTitle/InputWithTitle";
 import Button from "../../../Button/Button";
 import DotLoader from "../../../DotLoader/DotLoader";
@@ -33,7 +35,20 @@ const ModalContent: FC<ModalContentProps> = ({ onSubmit, actionButtonName, isSav
   return (
     <div className={styles.modalContent}>
       <div className={styles.modalInputs}>
-        <InputWithTitle placeholder={"Телефон"} value={phone} onChange={handlePhoneChange} className={styles.input} />
+        <InputMask mask={"+7\\999 999 99 99"} value={phone} onChange={handlePhoneChange}>
+          {
+            // @ts-ignore
+            () => (
+              <InputWithTitle
+                placeholder={"Телефон"}
+                value={phone}
+                onChange={handlePhoneChange}
+                className={styles.input}
+              />
+            )
+          }
+        </InputMask>
+
         <InputWithTitle
           placeholder={"Имя"}
           value={firstName}

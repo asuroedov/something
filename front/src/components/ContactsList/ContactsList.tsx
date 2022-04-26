@@ -1,18 +1,21 @@
 import React, { useEffect, useMemo } from "react";
 import { observer } from "mobx-react-lite";
+import { toJS } from "mobx";
 
 import contactsStore from "../../mobx/contactsStore";
 
+import AcceptRemoveContactModal from "../Modals/AcceptRemoveContactModal/AcceptRemoveContactModal";
 import ContactCard from "../ContactCard/ContactCard";
+
+import { filterContacts } from "../../utils/filterContacts";
 
 import { sortContactsByAlphabet } from "../../utils/sortContactsByAlphabet";
 
 import styles from "./style.module.scss";
-import AcceptRemoveContactModal from "../Modals/AcceptRemoveContactModal/AcceptRemoveContactModal";
-import { filterContacts } from "../../utils/filterContacts";
 
 const ContactsList = () => {
-  const { contacts, removeContactModalVisible, removingContact, searchString } = contactsStore;
+  const { removeContactModalVisible, removingContact, searchString } = contactsStore;
+  const contacts = toJS(contactsStore.contacts);
 
   useEffect(() => {
     contactsStore.getContacts();

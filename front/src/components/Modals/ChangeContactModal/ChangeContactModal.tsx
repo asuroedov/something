@@ -6,6 +6,7 @@ import contactsStore from "../../../mobx/contactsStore";
 import notificationsStore from "../../../mobx/notificationsStore";
 import { NotificationTypes } from "../../../types/notifications";
 import { ContactInterface } from "../../../types/contacts";
+import { removeExtraPhoneSpaces } from "../../../utils/removeExtraPhoneSpaces";
 
 interface ChangeContactModalProps {
   closeModal: () => void;
@@ -18,7 +19,7 @@ const ChangeContactModal: FC<ChangeContactModalProps> = ({ closeModal, contact }
   const handleChangeClick = useCallback(
     async (newContactData: ContactInterface) => {
       setIsSaving(true);
-      const responseStatus = await contactsStore.changeContact(newContactData, contact.phone);
+      const responseStatus = await contactsStore.changeContact(removeExtraPhoneSpaces(newContactData), contact.phone);
       if (responseStatus.isSuccess) {
         notificationsStore.pushNotification("Контакт изменен успешно!", NotificationTypes.success);
         closeModal();
@@ -28,7 +29,7 @@ const ChangeContactModal: FC<ChangeContactModalProps> = ({ closeModal, contact }
         notificationsStore.pushNotification(responseStatus.message || "Ошибка редактирования контакта");
       setIsSaving(false);
     },
-    [contact.phone],
+    [closeModal, contact.phone],
   );
 
   return (
