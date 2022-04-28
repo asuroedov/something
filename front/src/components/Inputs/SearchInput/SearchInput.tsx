@@ -11,16 +11,20 @@ import styles from "./style.module.scss";
 const SearchInput = () => {
   const [searchValue, setSearchValue] = useState("");
 
-  const handleChangeInput = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.currentTarget.value;
-    setSearchValue(value);
-    const setValueIntoStorage = () => {
-      contactsStore.setSearchString(value);
-    };
-
+  const debouncedSetValueIntoStorage = useCallback((value: string) => {
+    const setValueIntoStorage = () => contactsStore.setSearchString(value);
     const debouncedSetValueIntoStorage = debounce(setValueIntoStorage, 100);
     debouncedSetValueIntoStorage();
   }, []);
+
+  const handleChangeInput = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value;
+      setSearchValue(value);
+      debouncedSetValueIntoStorage(value);
+    },
+    [debouncedSetValueIntoStorage],
+  );
 
   return (
     <BaseInput

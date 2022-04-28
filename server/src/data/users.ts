@@ -11,7 +11,6 @@ const users: Map<string, UserInterface> = new Map([
       ]),
     },
   ],
-  ["test2", { login: "test2", password: "121212", contacts: new Map() }],
 ]);
 
 export default users;
